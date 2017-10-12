@@ -56,7 +56,6 @@ public class SampleResponseBuilder implements UserInfoResponseBuilder {
             }
             claims = getClaimsFromUserStore(tokenResponse);
         } else {
-
             claims = getClaimsMap(userAttributes);
         }
         if (claims == null) {
@@ -119,6 +118,7 @@ public class SampleResponseBuilder implements UserInfoResponseBuilder {
                 return mappedAppClaims;
             }
 
+            // Retrieve requested claim of the service provider.
             ClaimMapping[] requestedLocalClaimMap = serviceProvider.getClaimConfig().getClaimMappings();
 
             if (requestedLocalClaimMap != null && requestedLocalClaimMap.length > 0) {

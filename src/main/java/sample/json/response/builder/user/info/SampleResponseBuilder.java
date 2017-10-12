@@ -17,7 +17,6 @@ import org.wso2.carbon.identity.core.util.IdentityUtil;
 import org.wso2.carbon.identity.oauth.cache.AuthorizationGrantCache;
 import org.wso2.carbon.identity.oauth.cache.AuthorizationGrantCacheEntry;
 import org.wso2.carbon.identity.oauth.cache.AuthorizationGrantCacheKey;
-import org.wso2.carbon.identity.oauth.user.UserInfoClaimRetriever;
 import org.wso2.carbon.identity.oauth.user.UserInfoEndpointException;
 import org.wso2.carbon.identity.oauth.user.UserInfoResponseBuilder;
 import org.wso2.carbon.identity.oauth2.dao.TokenMgtDAO;
@@ -43,7 +42,6 @@ public class SampleResponseBuilder implements UserInfoResponseBuilder {
     private static final Log log = LogFactory.getLog(SampleResponseBuilder.class);
     private static final String SP_DIALECT = "http://wso2.org/oidc/claim";
     private static final String INBOUND_AUTH2_TYPE = "oauth2";
-    private UserInfoClaimRetriever claimRetriever;
 
     @Override
     public String getResponseString(OAuth2TokenValidationResponseDTO tokenResponse)
@@ -71,8 +69,8 @@ public class SampleResponseBuilder implements UserInfoResponseBuilder {
     }
 
     private Map<ClaimMapping, String> getUserAttributesFromCache(OAuth2TokenValidationResponseDTO tokenResponse) {
-        AuthorizationGrantCacheKey cacheKey = new AuthorizationGrantCacheKey(tokenResponse.getAuthorizationContextToken()
-                                                                                          .getTokenString());
+        AuthorizationGrantCacheKey cacheKey = new AuthorizationGrantCacheKey(tokenResponse
+                                                             .getAuthorizationContextToken().getTokenString());
         AuthorizationGrantCacheEntry cacheEntry = AuthorizationGrantCache.getInstance()
                                                                          .getValueFromCacheByToken(cacheKey);
         if (cacheEntry == null) {
@@ -104,8 +102,8 @@ public class SampleResponseBuilder implements UserInfoResponseBuilder {
             UserStoreManager userstore = realm.getUserStoreManager();
             TokenMgtDAO tokenMgtDAO = new TokenMgtDAO();
 
-            AccessTokenDO accessTokenDO = tokenMgtDAO.retrieveAccessToken(tokenResponse.getAuthorizationContextToken
-                    ().getTokenString(), false);
+            AccessTokenDO accessTokenDO = tokenMgtDAO.retrieveAccessToken(tokenResponse.getAuthorizationContextToken()
+                                                                               .getTokenString(), false);
             ApplicationManagementService applicationMgtService = OAuth2ServiceComponentHolder
                     .getApplicationMgtService();
             String clientId = null;
